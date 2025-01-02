@@ -4,10 +4,13 @@ Keymaps = {
 	down = "s",
 	left = "a",
 	right = "d",
-	quit = "escape"
+	quit = "escape",
+	slow_mode = "l",
+	attack = "m",
+	special = "k",
 }
 
-function love.keypressed(key, scancode, isrepeat)
+function love.keypressed(scancode)
 	if scancode == Keymaps.quit then
 		love.event.quit()
 	end

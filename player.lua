@@ -4,15 +4,22 @@ function NewPlayer()
 		x = 10,
 		y = 10,
 		speed = 350,
+		focus_speed = 150,
 		width = 50,
 		height = 50,
 
 		update = function(self,dt)
-			print(self.x)
+			self:move(dt)
+		end,
+
+		move = function(self, dt)
+			local move_speed = self.speed
+			if love.keyboard.isDown(Keymaps.slow_mode) then move_speed = self.slow_speed end
+
 			local dir = {x=0,y=0}
 			dir = self:get_move_direction()
-			self.x = self.x + dir.x * dt * self.speed
-			self.y = self.y + dir.y * dt * self.speed
+			self.x = self.x + dir.x * dt * move_speed
+			self.y = self.y + dir.y * dt * move_speed
 
 			--! set walls
 			if self.x < 0 - self.width/4 then self.x = 0 - self.width/4 end
@@ -22,7 +29,7 @@ function NewPlayer()
 			if self.y > Window_height - self.height/2 then self.y = Window_height - self.height/2 end
 		end,
 
-		get_move_direction = function(self)
+		get_move_direction = function()
 			local dir = {x=0,y=0}
 			if love.keyboard.isDown(Keymaps.right) then dir.x = dir.x + 1 end
 			if love.keyboard.isDown(Keymaps.left) then dir.x = dir.x - 1 end
@@ -35,7 +42,7 @@ function NewPlayer()
 				dir.y = dir.y/len
 			end
 			return dir
-		end
+		end,
 	}
 	return player
 end
