@@ -5,7 +5,7 @@ function love.load()
 	Window_height = 800
 	Player = NewPlayer()
 
-	love.window.setTitle("yayya")
+	love.window.setTitle("danmaku")
 	love.window.setMode(Window_width, Window_height)
 	love.keyboard.setKeyRepeat(true)
 end
@@ -28,11 +28,12 @@ function love.draw()
 	if Player ~= nil then
 		love.graphics.draw(Player.sprite,Player.x,Player.y,0,1,1,0,32)
 	end
+	love.graphics.print(love.timer.getFPS(), Window_width - 20 ,10)
 end
 
 function Draw_stats()
 	local stats = love.graphics.getStats()
-	local stat_location = 0
+	local stat_location = 10
 	for k,v in pairs(stats) do
 		love.graphics.print(k .. ":" .. v .. "\n", 10, stat_location)
 		stat_location = stat_location + 20

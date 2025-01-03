@@ -3,6 +3,8 @@ function NewPlayer()
 	local player = {
 		sprite = love.graphics.newImage("assets/PipHeart.png"),
 		bullets = {},
+		time_since_last_bullet = 0,
+		bullet_delay = 5,
 		x = 10,
 		y = 10,
 		speed = 350,
@@ -11,6 +13,9 @@ function NewPlayer()
 		height = 50,
 	}
 	function player:update(dt)
+		if self.time_since_last_bullet > 0 then
+			self.time_since_last_bullet = self.time_since_last_bullet - 1
+		end
 		if love.keyboard.isDown(Keymaps.attack) then
 			self:shoot()
 		end
@@ -18,7 +23,10 @@ function NewPlayer()
 	end
 
 	function player:shoot()
-		table.insert(self.bullets, NewBullet("/assets/test-bullet.png", self.x + self.width/2, self.y,200,{x=0,y=-1}))
+		if self.time_since_last_bullet == 0 then
+			table.insert(self.bullets, NewBullet("/assets/test-bullet.png", self.x + self.width/2, self.y,800,{x=0,y=-1}))
+			self.time_since_last_bullet = self.bullet_delay
+		end
 	end
 
 	function player:move(dt)
