@@ -1,4 +1,5 @@
 require("keymaps")
+require("movable")
 require("player")
 function love.load()
 	Window_width = 500
