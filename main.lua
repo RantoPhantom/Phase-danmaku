@@ -1,5 +1,4 @@
 require("keymaps")
-require("movable")
 require("player")
 require("enemy")
 function love.load()

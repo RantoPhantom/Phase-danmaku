@@ -1,18 +1,18 @@
 require("bullet")
 function NewPlayer()
 	local player = {
+		x = 0,
+		y = 0,
 		sprite = love.graphics.newImage("assets/PipHeart.png"),
 		bullets = {},
 		health = 100,
 		time_since_last_bullet = 0,
 		bullet_delay = 5,
+
 		focus_speed = 150,
-		body = nil,
-		collision_box = nil,
-		fixture = nil,
+		speed = 350
 	}
 
-	setmetatable(player, {__index = Movable})
 	player.width, player.height = player.sprite:getDimensions()
 
 	function player:update(dt)
