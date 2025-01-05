@@ -17,9 +17,11 @@ function NewPlayer()
 
 	function player:update(dt)
 		--set the body and shape and then connecting them together
+		if self.body == nil then
 			self.body = love.physics.newBody(World, self.x, self.y, "dynamic")
 			self.collision_box = love.physics.newCircleShape(self.x ,self.y, self.width/2)
 			self.fixture = love.physics.newFixture(self.body, self.collision_box)
+		end
 		-- update bullets and remove when out of bounds
 		for i, bullet in ipairs(self.bullets) do
 			bullet:update(dt)
