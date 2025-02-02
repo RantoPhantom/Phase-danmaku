@@ -1,7 +1,14 @@
-require("keymaps")
-require("player")
-require("enemy")
+require("globals.keymaps")
+require("globals.sprites")
+require("entities.player")
+require("entities.enemy")
 function love.load()
+	CollisionMasks = {
+		player = 1,
+		world = 2,
+		enemies = 3,
+		projectiles = 4,
+	}
 	Window_width = 500
 	Window_height = 800
 	Player = NewPlayer()
@@ -10,12 +17,15 @@ function love.load()
 	love.window.setTitle("danmaku")
 	love.window.setMode(Window_width, Window_height)
 	love.keyboard.setKeyRepeat(true)
+	love.physics.setMeter(64)
 	World = love.physics.newWorld(0,0,true)
+	World:setCallbacks(BeginContact)
 end
 
 function love.update(dt)
 	World:update(dt)
 	Player:update(dt)
+	Dummy:update(dt)
 end
 
 function love.draw()
@@ -35,4 +45,9 @@ function Draw_stats()
 		stat_location = stat_location + 20
 	end
 	--]]
+end
+
+function BeginContact(a,b ,coll)
+	print(a:getUserData(), b:getUserData())
+	print(coll:getNormal())
 end

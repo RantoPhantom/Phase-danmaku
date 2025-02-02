@@ -1,4 +1,4 @@
-require("bullet")
+require("entities.bullet")
 function NewPlayer()
 	local player = {
 		x = 0,
@@ -16,10 +16,9 @@ function NewPlayer()
 	player.width, player.height = player.sprite:getDimensions()
 
 	function player:update(dt)
-		--set the body and shape and then connecting them together
 		if self.body == nil then
 			self.body = love.physics.newBody(World, self.x, self.y, "dynamic")
-			self.collision_box = love.physics.newCircleShape(self.x ,self.y, self.width/2)
+			self.collision_box = love.physics.newCircleShape(self.width/2)
 			self.fixture = love.physics.newFixture(self.body, self.collision_box)
 			self.fixture:setUserData("Player")
 			self.fixture:setCategory(CollisionMasks.player)
@@ -62,9 +61,9 @@ function NewPlayer()
 
 	function player:draw()
 		-- draw all the bullets
-		for _, bullet in pairs(Player.bullets) do bullet:draw() end
+		for _, bullet in pairs(self.bullets) do bullet:draw() end
 		--draw player
-		love.graphics.draw(Player.sprite,Player.x,Player.y,0,1,1, self.width/2, self.height/2)
+		love.graphics.draw(self.sprite,self.x,self.y,0,1,1, self.width/2, self.height/2)
 		love.graphics.circle("line", self.x, self.y, self.width/2)
 	end
 
